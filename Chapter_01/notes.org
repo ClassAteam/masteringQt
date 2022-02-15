@@ -1,0 +1,11 @@
+* Inbox
+** [2022-02-16 Ср 00:14]
+bool Task::isCompleted() const
+{
+   return ui->checkbox->isChecked();
+}
+
+[[file:~/repo/Mastering-Qt-5/Chapter_01/Task.cpp::bool Task::isCompleted() const
+{
+ return ui->checkbox->isChecked();
+}]]
