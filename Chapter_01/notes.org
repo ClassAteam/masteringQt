@@ -1,4 +1,14 @@
 * Inbox
+** [2022-02-16 Ср 20:41]
+    // connect(ui->removeButton, &QPushButton::clicked, [this, name] {
+    //         qDebug() << "Trying to remove" << name;
+    //         this->emit removed(this);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_01/Task.cpp::// connect(ui->removeButton, &QPushButton::clicked, \[this, name\] {
+ // qDebug() << "Trying to remove" << name;
+ // this->emit removed(this);]]
+
+ example of how lambda function can be implemented
 ** [2022-02-16 Ср 00:14]
 bool Task::isCompleted() const
 {
