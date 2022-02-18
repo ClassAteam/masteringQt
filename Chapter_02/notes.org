@@ -1,0 +1,7 @@
+* Inbox
+** [2022-02-17 Чт 14:19] whoever inherits from that class will get updateSeries() method automatically updated
+    connect(&mRefreshTimer, &QTimer::timeout,
+            this, &SysInfoWidget::updateSeries);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfoWidget.cpp::connect(&mRefreshTimer, &QTimer::timeout,
+ this, &SysInfoWidget::updateSeries);]]
