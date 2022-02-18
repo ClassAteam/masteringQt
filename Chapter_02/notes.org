@@ -1,4 +1,92 @@
 * Inbox
+** [2022-02-18 Пт 13:56] Looks like it can be done cause mChartView is added into VBoxLayout (mChartView isnt Widget!), so widget inserts into widget
+    ui->centralWidget->layout()->addWidget(&mCpuWidget);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/MainWindow.cpp::ui->centralWidget->layout()->addWidget(&mCpuWidget);]]
+** [2022-02-18 Пт 13:44] The QChart class is retrieved from the SysInfoWidget::chartView() function. When calling chart->addSeries(mSeries), chart takes the ownership of mSeries and will draw it according to the series type; in our case, QPieSeries.
+    chart->addSeries(mSeries);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/CpuWidget.cpp::chart->addSeries(mSeries);]]
+** [2022-02-18 Пт 13:35] "The mSeries function is now ready to be linked to the class managing its drawing: QChart"
+    QChart* chart = chartView().chart();
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/CpuWidget.cpp::QChart* chart = chartView().chart();]]
+** [2022-02-18 Пт 13:31] Looks like the viewport where we want to draw!
+    QChart* chart = chartView().chart();
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/CpuWidget.cpp::QChart* chart = chartView().chart();]]
+** [2022-02-18 Пт 11:49] since we overrode the SyssInfoWidget::updateSeries slot, we have to include the Q_OBJECT macro to allow CpuWidget to respond to the SysInfoWidgetmRefreshTimer::timeout() signal.
+    Q_OBJECT
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/CpuWidget.h::Q_OBJECT]]
+** [2022-02-18 Пт 11:43] The next step is to override the updateSeries() function from the SysInfoWidget class and start using the Qt Charts API!
+    void updateSeries() override;
+
+private:
+    QtCharts::QPieSeries* mSeries;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/CpuWidget.h::void updateSeries() override;
+
+private:
+ QtCharts::QPieSeries* mSeries;]]
+** [2022-02-18 Пт 11:38] In the constructor, the only parameter needed is QWidget* parent. Since we provided default values for the startDelayMs variables in the SysInfoWidget class, we get the best possoble behavior; there is no need to reemeber it wehn subclassing SysInfoWidget, but it is still easy to verride it if you need to.
+CpuWidget::CpuWidget(QWidget* parent) :
+    SysInfoWidget(parent),
+    mSeries(new QPieSeries(this))
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/CpuWidget.cpp::CpuWidget::CpuWidget(QWidget* parent) :
+ SysInfoWidget(parent),
+ mSeries(new QPieSeries(this))]]
+** [2022-02-18 Пт 10:49] defalut values. how to do it right!
+    explicit SysInfoWidget(QWidget *parent = 0,
+                           int startDelayMs = 500,
+                           int updateSeriesDelayMs = 500);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfoWidget.h::explicit SysInfoWidget(QWidget *parent = 0,
+ int startDelayMs = 500,
+ int updateSeriesDelayMs = 500);]]
+** [2022-02-18 Пт 10:40] Declaring the singleton variable as a static variable in the instance() function is a way to make a singleton in C++. We tend to prefer this version because you do not need to worry about the singleton memory management. The compiler will handle the instantiation the first time this unction is called, as well as the destruction. Moreover, since C++11, this method is thread-safe.
+        static SysInfoWindowsImpl singleton;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfo.cpp::static SysInfoWindowsImpl singleton;]]
+** [2022-02-18 Пт 10:18] static function is the key property of the singleton
+    static SysInfo& instance();
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfo.h::static SysInfo& instance();]]
+** [2022-02-18 Пт 10:11] Since only instance of the object must exist, allowing the copy constructor and the assignment operator is nonsense. One way to solve the problem is to make them PRIVATE
+    SysInfo(const SysInfo& rhs);
+    SysInfo& operator=(const SysInfo& rhs);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfo.h::SysInfo(const SysInfo& rhs);
+ SysInfo& operator=(const SysInfo& rhs);]]
+** [2022-02-18 Пт 10:08] notice that base class return referrence only to the base class but all methods is invoked from the derived classes!
+    static SysInfo& instance();
+    virtual ~SysInfo();
+
+    virtual void init() = 0;
+    virtual double cpuLoadAverage() = 0;
+    virtual double memoryUsed() = 0;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfo.h::static SysInfo& instance();
+ virtual ~SysInfo();
+
+ virtual void init() = 0;
+ virtual double cpuLoadAverage() = 0;
+ virtual double memoryUsed() = 0;]]
+** [2022-02-18 Пт 09:39] How to initialize internal vector in the class!
+    mCpuLoadLastValues()
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfoLinuxImpl.cpp::mCpuLoadLastValues()]]
+** [2022-02-18 Пт 09:31] look at this. Method completely virtual "...() = 0 in the header" but we can define behavior of this (e.g connect it to the timer)
+    connect(&mRefreshTimer, &QTimer::timeout,
+            this, &SysInfoWidget::updateSeries);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfoWidget.cpp::connect(&mRefreshTimer, &QTimer::timeout,
+ this, &SysInfoWidget::updateSeries);]]
+** [2022-02-18 Пт 09:15] some kind of forward declaration ???
+typedef struct _FILETIME FILETIME;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfoWindowsImpl.h::typedef struct _FILETIME FILETIME;]]
 ** [2022-02-17 Чт 14:19] whoever inherits from that class will get updateSeries() method automatically updated
     connect(&mRefreshTimer, &QTimer::timeout,
             this, &SysInfoWidget::updateSeries);
