@@ -1,0 +1,19 @@
+* Inbox
+** [2022-02-21 Пн 16:11] The public visibility is to give DatabaseManager clients access to the albumDao field. The API becomes intuitive enough; if you want to make a database operation on an album, just call DatabaseManager::instance().albumDao. The const keyword is to make sure that nobody can modify albumDao. Because it is public, we cannot guarantee the safety of the object(anybody could modify the object). As a side-effect, wer force every public function fo AlbumDao to be const. This makes sense; after all, the AlbumDao field could have been a namespace with a bunch of functions. It is more conviniet for it to be a class because we can keep the reference to the database connection with mDatabase field.
+    const AlbumDao albumDao;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/DatabaseManager.h::const AlbumDao albumDao;]]
+** [2022-02-21 Пн 15:49] This parameter is the database connection that will be used for all the SQL queries done by the AlbumDao class.
+    QSqlDatabase& mDatabase;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/AlbumDao.h::QSqlDatabase& mDatabase;]]
+** [2022-02-21 Пн 15:40] implementing the CRUD(Create, Read, Update, Delete) for both our data classes in DatabaseManager would quickly push DatabaseManager.cpp to be several hundreds line long. For this reason, each of our dataclasses will have a dedicated database class, responsible for all the database CRUD operations.
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/AlbumDao.h::class AlbumDao]]
+** [2022-02-21 Пн 14:36] The DatabaseManager class will open the connection in the mDatabase field and lend it to other possible classes
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/DatabaseManager.h::class DatabaseManager]]
+** [2022-02-21 Пн 14:06] In the first constructor, the static function, QUrl::fromLocalFile, is called to provide a QUrl object to the other constructor, which takes a QUrl parameter!!!??? The ability to call other constructors is a nice addition in C++11.
+    Picture(QUrl::fromLocalFile(filePath))
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/Picture.cpp::Picture(QUrl::fromLocalFile(filePath))]]

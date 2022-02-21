@@ -1,4 +1,8 @@
 * Inbox
+** [2022-02-21 Пн 09:17] The moc command takes every class containing the Q_OBJECT macro (paired with the superclass QObject) and generates the intermediate moc_*.cpp files, which include everything needed to make the sifnal/slot framework work.
+    Q_OBJECT
+
+[[file:~/repo/Mastering-Qt-5/Chapter_02/SysInfoWidget.h::Q_OBJECT]]
 ** [2022-02-18 Пт 13:56] Looks like it can be done cause mChartView is added into VBoxLayout (mChartView isnt Widget!), so widget inserts into widget
     ui->centralWidget->layout()->addWidget(&mCpuWidget);
 
