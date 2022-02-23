@@ -1,4 +1,44 @@
 * Inbox
+** [2022-02-23 Ср 21:05] We simpply assign the database pictures for the given albumId to mPictures. Because we work with smart pointers at every level, we do not even see any specific semantics here. Still, mPicture is uniquie_ptr<vector<unique_ptr<Picutre>>>. When the = operator is callesd the unique_ptr pointer overloads it and two things happen: 1) The ownership of the right-hand side(the pictures retrieved from the databvase) is transferred t oMPictures 2) The old content of MPuctures is automatically deleted.
+    mPictures = mDb.pictureDao.picturesForAlbum(albumId);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/PictureModel.cpp::mPictures = mDb.pictureDao.picturesForAlbum(albumId);]]
+** [2022-02-23 Ср 14:14] Until that line, album is "owned" by the while scope, the move gives the ownership to the lkist. At the last instruciton, return list, we should have written move(list), but C++11 accepts the direct return and will automatically make the move() function for us.
+        list->push_back(move(album));
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/AlbumDao.cpp::list->push_back(move(album));]]
+** [2022-02-21 Пн 22:19] How to handle long strings
+        query.exec(QString("CREATE TABLE pictures")
+        + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        + "album_id INTEGER, "
+        + "url TEXT)");
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/PictureDao.cpp::query.exec(QString("CREATE TABLE pictures")
+ + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
+ + "album_id INTEGER, "
+ + "url TEXT)");]]
+** [2022-02-21 Пн 22:09] How the Raw unmodified vector-returning function would look like
+unique_ptr<vector<unique_ptr<Album>>> AlbumDao::albums() const
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/AlbumDao.cpp::unique_ptr<vector<unique_ptr<Album>>> AlbumDao::albums() const]]
+
+QVector<Album*> AlbumDao::albums() const
+{
+    QSqlQuery query("SELECT * FROM albums", mDatabase);
+    query.exec();
+    QVector<Album*> list;
+    while(query.next()) {
+        Album* album = new Album();
+        album->setId(query.value("id").toInt());
+        album->setName(query.value("name").toString());
+        list.append(album);
+    }
+    return list;
+}
+** [2022-02-21 Пн 21:44] !!!not obvious thing!!! Because QSqlQuery::bind() expects a QVariant as a parameter value, we have to add the include directive to htis class
+    query.bindValue(":name", album.name());
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/AlbumDao.cpp::query.bindValue(":name", album.name());]]
 ** [2022-02-21 Пн 16:11] The public visibility is to give DatabaseManager clients access to the albumDao field. The API becomes intuitive enough; if you want to make a database operation on an album, just call DatabaseManager::instance().albumDao. The const keyword is to make sure that nobody can modify albumDao. Because it is public, we cannot guarantee the safety of the object(anybody could modify the object). As a side-effect, wer force every public function fo AlbumDao to be const. This makes sense; after all, the AlbumDao field could have been a namespace with a bunch of functions. It is more conviniet for it to be a class because we can keep the reference to the database connection with mDatabase field.
     const AlbumDao albumDao;
 
