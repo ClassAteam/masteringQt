@@ -20,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     AlbumModel* albumModel = new AlbumModel(this);
-    QItemSelectionModel* albumSelectionModel = new QItemSelectionModel(albumModel, this);
+    QItemSelectionModel* albumSelectionModel =
+        new QItemSelectionModel(albumModel, this);
     mGalleryWidget->setAlbumModel(albumModel);
     mGalleryWidget->setAlbumSelectionModel(albumSelectionModel);
 
@@ -28,7 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ThumbnailProxyModel* thumbnailModel = new ThumbnailProxyModel(this);
     thumbnailModel->setSourceModel(pictureModel);
 
-    QItemSelectionModel* pictureSelectionModel = new QItemSelectionModel(thumbnailModel, this);
+    QItemSelectionModel* pictureSelectionModel =
+        new QItemSelectionModel(thumbnailModel, this);
     mGalleryWidget->setPictureModel(thumbnailModel);
     mGalleryWidget->setPictureSelectionModel(pictureSelectionModel);
     mPictureWidget->setModel(thumbnailModel);

@@ -49,7 +49,8 @@ void AlbumWidget::setAlbumModel(AlbumModel* albumModel)
 {
     mAlbumModel = albumModel;
 
-    connect(mAlbumModel, &QAbstractItemModel::dataChanged, [this] (const QModelIndex &topLeft) {
+    connect(mAlbumModel, &QAbstractItemModel::dataChanged,
+            [this] (const QModelIndex &topLeft) {
         if (topLeft == mAlbumSelectionModel->currentIndex()) {
             loadAlbum(topLeft);
         }

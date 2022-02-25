@@ -1,0 +1,9 @@
+* Inbox
+** [2022-02-25 Пт 10:10] Album it widget class is just data holder; addAlbum() will use it to create and store the real object with a unique ID.
+    unique_ptr<Album> newAlbum(new Album(album));
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/AlbumModel.cpp::unique_ptr<Album> newAlbum(new Album(album));]]
+** [2022-02-25 Пт 09:59] The two setters will mainly be used to set the model and the selection model of alubmList. Out QListView class will then automatically request the model (AlbumMode) to get the row count and Qt::DisplaRole (the album's name) for each one of them.
+    void setModel(AlbumModel* model);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/AlbumListWidget.h::void setModel(AlbumModel* model);]]
