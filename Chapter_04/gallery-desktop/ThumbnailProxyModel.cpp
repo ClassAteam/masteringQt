@@ -2,7 +2,7 @@
 
 #include "PictureModel.h"
 
-const unsigned int THUMBNAIL_SIZE = 350;
+const unsigned int THUMBNAIL_SIZE = 100;
 
 ThumbnailProxyModel::ThumbnailProxyModel(QObject* parent) :
     QIdentityProxyModel(parent),
@@ -16,9 +16,7 @@ QVariant ThumbnailProxyModel::data(const QModelIndex& index, int role) const
         return QIdentityProxyModel::data(index, role);
     }
 
-    QString filepath = sourceModel()->data(index,
-                                           PictureModel::Roles::FilePathRole)
-                                                                  .toString();
+    QString filepath = sourceModel()->data(index, PictureModel::Roles::FilePathRole) .toString();
     return *mThumbnails[filepath];
 }
 
@@ -61,8 +59,7 @@ void ThumbnailProxyModel::generateThumbnails(const QModelIndex& startIndex,
     const QAbstractItemModel* model = startIndex.model();
     int lastIndex = startIndex.row() + count;
     for(int row = startIndex.row(); row < lastIndex; row++) {
-        QString filepath = model->data(model->index(row, 0),
-                                       PictureModel::Roles::FilePathRole).toString();
+        QString filepath = model->data(model->index(row, 0), PictureModel::Roles::FilePathRole).toString();
         QPixmap pixmap(filepath);
         auto thumbnail = new QPixmap(pixmap
                                      .scaled(THUMBNAIL_SIZE, THUMBNAIL_SIZE,
