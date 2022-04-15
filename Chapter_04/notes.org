@@ -1,4 +1,14 @@
 * Inbox
+** [2022-04-15 Пт 15:36] I think it should be done because of the signals registration. (Model passes the OS signal from the bottom up)
+AlbumModel::AlbumModel(QObject* parent) :
+    QAbstractListModel(parent),
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/AlbumModel.cpp::AlbumModel::AlbumModel(QObject* parent) :
+ QAbstractListModel(parent),]]
+** [2022-04-15 Пт 15:21] just there the model of the album is created and is get passing down the model classes
+    AlbumModel* albumModel = new AlbumModel(this);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/MainWindow.cpp::AlbumModel* albumModel = new AlbumModel(this);]]
 ** [2022-04-15 Пт 15:12] the magic of transfering windowtables into internal's class representation
     ui->albumListWidget->setModel(albumModel);
 
