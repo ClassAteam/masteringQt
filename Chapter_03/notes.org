@@ -1,4 +1,10 @@
 * Inbox
+** [2022-04-19 Вт 15:00] How to handle big strokes pieces
+        query.exec(QString("CREATE TABLE pictures")
+        + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "
+
+[[file:~/repo/Mastering-Qt-5/Chapter_03/gallery-core/PictureDao.cpp::query.exec(QString("CREATE TABLE pictures")
+ + " (id INTEGER PRIMARY KEY AUTOINCREMENT, "]]
 ** [2022-02-23 Ср 21:05] We simpply assign the database pictures for the given albumId to mPictures. Because we work with smart pointers at every level, we do not even see any specific semantics here. Still, mPicture is uniquie_ptr<vector<unique_ptr<Picutre>>>. When the = operator is callesd the unique_ptr pointer overloads it and two things happen: 1) The ownership of the right-hand side(the pictures retrieved from the databvase) is transferred t oMPictures 2) The old content of MPuctures is automatically deleted.
     mPictures = mDb.pictureDao.picturesForAlbum(albumId);
 

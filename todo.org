@@ -1,0 +1,25 @@
+* Inbox
+** TODO Actually i think for reworking with another databases
+    std::unique_ptr<QSqlDatabase> mDatabase;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/DatabaseManager.h::std::unique_ptr<QSqlDatabase> mDatabase;]]
+** TODO why???
+    std::unique_ptr<QSqlDatabase> mDatabase;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/DatabaseManager.h::std::unique_ptr<QSqlDatabase> mDatabase;]]
+** TODO I'm not clearly sure what is it for
+    Picture(QUrl::fromLocalFile(filePath))
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/Picture.cpp::Picture(QUrl::fromLocalFile(filePath))]]
+** TODO WTF IS THAT???
+class GALLERYCORESHARED_EXPORT Picture
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/Picture.h::class GALLERYCORESHARED_EXPORT Picture]]
+** TODO here it is
+    AlbumDao(QSqlDatabase& database);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/AlbumDao.h::AlbumDao(QSqlDatabase& database);]]
+** TODO whereis albumdao initiated???
+AlbumDao::AlbumDao(QSqlDatabase& database) :
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/AlbumDao.cpp::AlbumDao::AlbumDao(QSqlDatabase& database) :]]

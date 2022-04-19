@@ -1,4 +1,58 @@
 * Inbox
+** [2022-04-19 Вт 15:52] This function can be invoked via the meta-object system and from QML
+QVariant PictureModel::data(const QModelIndex& index, int role) const
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/PictureModel.cpp::QVariant PictureModel::data(const QModelIndex& index, int role) const]]
+** [2022-04-19 Вт 15:21] And the databasemanager is singleton by himself
+    const AlbumDao albumDao;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/DatabaseManager.h::const AlbumDao albumDao;]]
+** [2022-04-19 Вт 15:16] is not destructing by destructor just by himself
+    std::unique_ptr<QSqlDatabase> mDatabase;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/DatabaseManager.h::std::unique_ptr<QSqlDatabase> mDatabase;]]
+** [2022-04-19 Вт 15:10] initialing unique_ptr btw...
+    mDatabase(new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"))),
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/DatabaseManager.cpp::mDatabase(new QSqlDatabase(QSqlDatabase::addDatabase("QSQLITE"))),]]
+** [2022-04-19 Вт 14:23] This shit is the AlbumListWidget and AlbumWidget
+    GalleryWidget* mGalleryWidget;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/MainWindow.h::GalleryWidget* mGalleryWidget;]]
+** [2022-04-19 Вт 14:20] Look at this just two of them!!! Carefully get to know this
+    ui->albumListWidget->setModel(albumModel);
+    ui->albumWidget->setAlbumModel(albumModel);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/GalleryWidget.cpp::ui->albumListWidget->setModel(albumModel);
+ ui->albumWidget->setAlbumModel(albumModel);]]
+** [2022-04-19 Вт 14:11] creation a new model
+    AlbumModel* albumModel = new AlbumModel(this);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/MainWindow.cpp::AlbumModel* albumModel = new AlbumModel(this);]]
+** [2022-04-19 Вт 14:07] and all actual magic happens here
+    ui->albumList->setModel(mAlbumModel);
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/AlbumListWidget.cpp::ui->albumList->setModel(mAlbumModel);]]
+** [2022-04-19 Вт 14:06] we create and passing down the model from here
+void AlbumListWidget::setModel(AlbumModel* model)
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/AlbumListWidget.cpp::void AlbumListWidget::setModel(AlbumModel* model)]]
+** [2022-04-19 Вт 14:03] this is the key for widget and model communication
+    AlbumModel* mAlbumModel;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/AlbumListWidget.h::AlbumModel* mAlbumModel;]]
+** [2022-04-19 Вт 14:01] first we create real object here and then passing him down to work around the database
+void AlbumListWidget::createAlbum()
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-desktop/AlbumListWidget.cpp::void AlbumListWidget::createAlbum()]]
+** [2022-04-19 Вт 13:45] unique pointer updated and retrieved from the datbase. UNIQUE!!!!
+unique_ptr<vector<unique_ptr<Album>>> AlbumDao::albums() const
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/AlbumDao.cpp::unique_ptr<vector<unique_ptr<Album>>> AlbumDao::albums() const]]
+** [2022-04-19 Вт 13:38] database intering point from albummodel
+    DatabaseManager& mDb;
+
+[[file:~/repo/Mastering-Qt-5/Chapter_04/gallery-core/AlbumModel.h::DatabaseManager& mDb;]]
 ** [2022-04-15 Пт 15:36] I think it should be done because of the signals registration. (Model passes the OS signal from the bottom up)
 AlbumModel::AlbumModel(QObject* parent) :
     QAbstractListModel(parent),
